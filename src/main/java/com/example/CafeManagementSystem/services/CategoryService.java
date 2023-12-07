@@ -20,12 +20,29 @@ public class CategoryService {
                 .stream()
                 .map(ItemCat -> new CategoryDTO(ItemCat.getId(), ItemCat.getName()))
                 .toList();
-    };
+    }
 
     public SuccessResponse createItemCategory(CategoryDTO categoryDTO){
         Category category = new Category(categoryDTO.getName());
         categoryRepository.save(category);
         return new SuccessResponse("Category of Item Created Successfully");
+    }
+
+    public SuccessResponse updateItemCategory(Long categoryId, CategoryDTO categoryDTO){
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new RuntimeException("Category not found with id: " + categoryId));
+        category.setName(categoryDTO.getName());
+        categoryRepository.save(category);
+        return new SuccessResponse(("Category Updated Successfully"));
+    }
+    public SuccessResponse deleteItemCategory(Long categoryId){
+        if(categoryRepository.existsById((categoryId))){
+            categoryRepository.deleteById(categoryId);
+            return new SuccessResponse("Category Deleted Successfully");
+        }
+        else{
+            throw new RuntimeException("Category not found with id: " + categoryId);
+        }
     }
 
 }

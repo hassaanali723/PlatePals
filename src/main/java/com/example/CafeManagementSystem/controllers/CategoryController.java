@@ -26,5 +26,13 @@ public class CategoryController {
         return categoryService.createItemCategory(categoryDTO);
     }
 
+    @PutMapping("/{id}")
+    public SuccessResponse updateItemCategory(@PathVariable Long id, @RequestBody CategoryDTO categoryDTO){
+        return categoryService.updateItemCategory(id, categoryDTO);
+    }
 
+    @DeleteMapping("/{id}")
+    public SuccessResponse deleteItemCategory(@PathVariable Long id){
+        return categoryService.deleteItemCategory(id);
+    }
 }
